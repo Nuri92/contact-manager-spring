@@ -24,6 +24,11 @@ public class ContactMemoryRepository implements ContactRepository {
 	
 	@Override
 	public Contact findById(int id) {
+		for (Contact contact : findAll()) {
+			if (contact.getId() == id) {
+				return contact;
+			}
+		}
 		return null;
 	}
 	

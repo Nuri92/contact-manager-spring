@@ -16,4 +16,8 @@ public class ContactService {
 	public List<Contact> getContacts() {
 		return repository.findAll();
 	}
+	
+	public Contact getContactById(int id) {
+		return repository.findById(id);
+	}
 }
