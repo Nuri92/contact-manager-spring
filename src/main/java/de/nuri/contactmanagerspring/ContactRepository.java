@@ -3,7 +3,7 @@ package de.nuri.contactmanagerspring;
 import java.util.List;
 
 public interface ContactRepository {
-	void save(Contact contact);
+	Contact save(Contact contact);
 	
 	List<Contact> findAll();
 	

@@ -7,9 +7,16 @@ import java.util.List;
 
 @Repository
 public class ContactMemoryRepository implements ContactRepository {
-	@Override
-	public void save(Contact contact) {
+	private final List<Contact> contacts = new ArrayList<>();
+	private       int           nextId   = 1;
 	
+	@Override
+	public Contact save(Contact contact) {
+		Contact contactToSave =
+				new Contact(nextId, contact.getName(), contact.getEmail(), contact.getPhoneNumber(), contact.isFavorite());
+		contacts.add(contactToSave);
+		nextId++;
+		return contactToSave;
 	}
 	
 	@Override

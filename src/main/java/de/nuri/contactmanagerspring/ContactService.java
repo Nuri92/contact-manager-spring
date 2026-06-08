@@ -18,6 +18,14 @@ public class ContactService {
 	}
 	
 	public Contact getContactById(int id) {
-		return repository.findById(id);
+		Contact contact = repository.findById(id);
+		if (contact == null) {
+			throw new ContactNotFoundException(id);
+		}
+		return contact;
+	}
+	
+	public Contact addContact(Contact contact) {
+		return repository.save(contact);
 	}
 }

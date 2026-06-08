@@ -1,8 +1,6 @@
 package de.nuri.contactmanagerspring;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +25,10 @@ public class HelloController {
 	@GetMapping("/contacts/{id}")
 	public Contact getContactById(@PathVariable int id) {
 		return contactService.getContactById(id);
+	}
+	
+	@PostMapping("/contacts")
+	public Contact addContact(@RequestBody Contact contact) {
+		return contactService.addContact(contact);
 	}
 }

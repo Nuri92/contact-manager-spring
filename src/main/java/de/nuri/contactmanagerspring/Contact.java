@@ -8,6 +8,9 @@ public class Contact {
 	private String  phoneNumber;
 	private boolean favorite;
 	
+	public Contact() {
+	}
+	
 	public Contact(int id, String name, String email, String phoneNumber, boolean favorite) {
 		this.id          = id;
 		this.name        = name;
