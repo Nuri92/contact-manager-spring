@@ -59,6 +59,13 @@ public class ContactMemoryRepository implements ContactRepository {
 	}
 	
 	@Override
-	public void update(Contact contact) {
+	public Contact update(int id, Contact contact) {
+		for (Contact currentContact : contacts) {
+			if (currentContact.getId() == id) {
+				currentContact.update(contact.getName(), contact.getEmail(), contact.getPhoneNumber());
+				return currentContact;
+			}
+		}
+		return null;
 	}
 }

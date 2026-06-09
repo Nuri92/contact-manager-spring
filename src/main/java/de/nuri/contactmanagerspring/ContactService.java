@@ -30,10 +30,18 @@ public class ContactService {
 	}
 	
 	public void deleteContact(int id) {
-	 	Contact contact = repository.findById(id);
-	 	if (contact == null) {
-	 		throw new ContactNotFoundException(id);
-	    }
-	 	repository.deleteById(id);
+		Contact contact = repository.findById(id);
+		if (contact == null) {
+			throw new ContactNotFoundException(id);
+		}
+		repository.deleteById(id);
+	}
+	
+	public Contact updateContact(int id, Contact contact) {
+		Contact updatedContact = repository.update(id, contact);
+		if (updatedContact == null) {
+			throw new ContactNotFoundException(id);
+		}
+		return updatedContact;
 	}
 }

@@ -11,5 +11,5 @@ public interface ContactRepository {
 	
 	void deleteById(int id);
 	
-	void update(Contact contact);
+	Contact update(int id, Contact contact);
 }
