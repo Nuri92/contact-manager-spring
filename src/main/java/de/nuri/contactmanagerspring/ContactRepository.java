@@ -9,7 +9,7 @@ public interface ContactRepository {
 	
 	Contact findById(int id);
 	
-	void delete(Contact contact);
+	void deleteById(int id);
 	
 	void update(Contact contact);
 }

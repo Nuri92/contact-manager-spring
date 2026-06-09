@@ -31,4 +31,9 @@ public class HelloController {
 	public Contact addContact(@RequestBody Contact contact) {
 		return contactService.addContact(contact);
 	}
+	
+	@DeleteMapping("/contacts/{id}")
+	public void deleteContact(@PathVariable int id) {
+		contactService.deleteContact(id);
+	}
 }

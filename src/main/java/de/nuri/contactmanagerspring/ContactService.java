@@ -28,4 +28,12 @@ public class ContactService {
 	public Contact addContact(Contact contact) {
 		return repository.save(contact);
 	}
+	
+	public void deleteContact(int id) {
+	 	Contact contact = repository.findById(id);
+	 	if (contact == null) {
+	 		throw new ContactNotFoundException(id);
+	    }
+	 	repository.deleteById(id);
+	}
 }
