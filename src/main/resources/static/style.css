@@ -1,0 +1,21 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 700px;
+    margin: 40px auto;
+}
+
+input {
+    display: block;
+    margin-bottom: 8px;
+    padding: 8px;
+    width: 100%;
+}
+
+button {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+#contactsContainer {
+    margin-top: 20px;
+}
