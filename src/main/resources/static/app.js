@@ -18,7 +18,12 @@ async function loadContacts() {
             <strong>${contact.name}</strong><br>
             ${contact.email}<br>
             ${contact.phoneNumber}<br>
-            Favorit: ${contact.favorite}
+            Favorit: ${contact.favorite}<br>
+
+            <button onclick="deleteContact(${contact.id})">
+                Löschen
+            </button>
+
             <hr>
         `;
 
@@ -48,6 +53,17 @@ async function addContact() {
     nameInput.value = "";
     emailInput.value = "";
     phoneInput.value = "";
+
+    await loadContacts();
+}
+
+async function deleteContact(id) {
+    await fetch(
+        `${apiUrl}/${id}`,
+        {
+            method: "DELETE"
+        }
+    );
 
     await loadContacts();
 }
