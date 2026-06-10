@@ -2,6 +2,7 @@ const apiUrl = "http://localhost:8080/contacts";
 
 const contactsContainer = document.getElementById("contactsContainer");
 const addContactButton = document.getElementById("addContactButton");
+let editingContactId = null;
 
 addContactButton.addEventListener("click", addContact);
 
@@ -25,6 +26,9 @@ async function loadContacts() {
             <button onclick="deleteContact(${contact.id})">
                 Löschen
             </button>
+            <button onclick="startEditContact(${contact.id}, '${contact.name}', '${contact.email}', '${contact.phoneNumber}')">
+                Bearbeiten
+            </button>
 
             <hr>
         `;
@@ -44,13 +48,26 @@ async function addContact() {
         phoneNumber: phoneInput.value
     };
 
-    await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(contact)
-    });
+    if (editingContactId === null) {
+        await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(contact)
+        });
+    } else {
+        await fetch(`${apiUrl}/${editingContactId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(contact)
+        });
+
+        editingContactId = null;
+        addContactButton.textContent = "Kontakt hinzufügen";
+    }
 
     nameInput.value = "";
     emailInput.value = "";
@@ -79,6 +96,16 @@ async function toggleFavorite(id) {
     );
 
     await loadContacts();
+}
+
+function startEditContact(id, name, email, phoneNumber) {
+    editingContactId = id;
+
+    document.getElementById("nameInput").value = name;
+    document.getElementById("emailInput").value = email;
+    document.getElementById("phoneInput").value = phoneNumber;
+
+    addContactButton.textContent = "Kontakt aktualisieren";
 }
 
 loadContacts();
