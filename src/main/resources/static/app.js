@@ -19,6 +19,9 @@ async function loadContacts() {
             ${contact.email}<br>
             ${contact.phoneNumber}<br>
             Favorit: ${contact.favorite}<br>
+            <button onclick="toggleFavorite(${contact.id})">
+                ${contact.favorite ? "Entfavorisieren" : "Favorisieren"}
+            </button>
             <button onclick="deleteContact(${contact.id})">
                 Löschen
             </button>
@@ -61,6 +64,17 @@ async function deleteContact(id) {
         `${apiUrl}/${id}`,
         {
             method: "DELETE"
+        }
+    );
+
+    await loadContacts();
+}
+
+async function toggleFavorite(id) {
+    await fetch(
+        `${apiUrl}/${id}/favorite`,
+        {
+            method: "PATCH"
         }
     );
 
