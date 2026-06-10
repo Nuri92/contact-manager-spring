@@ -19,7 +19,6 @@ async function loadContacts() {
             ${contact.email}<br>
             ${contact.phoneNumber}<br>
             Favorit: ${contact.favorite}<br>
-
             <button onclick="deleteContact(${contact.id})">
                 Löschen
             </button>
