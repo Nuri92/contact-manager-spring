@@ -12,4 +12,6 @@ public interface ContactRepository {
 	void deleteById(int id);
 	
 	Contact update(int id, Contact contact);
+	
+	Contact toggleFavorite(int id);
 }

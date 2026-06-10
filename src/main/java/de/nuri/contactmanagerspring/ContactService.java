@@ -44,4 +44,14 @@ public class ContactService {
 		}
 		return updatedContact;
 	}
+	
+	public Contact toggleFavorite(int id) {
+		Contact contact = repository.findById(id);
+		
+		if (contact == null) {
+			throw new ContactNotFoundException(id);
+		}
+		
+	 return repository.toggleFavorite(id);
+	}
 }

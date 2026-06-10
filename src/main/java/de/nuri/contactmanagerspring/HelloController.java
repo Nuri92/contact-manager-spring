@@ -41,4 +41,9 @@ public class HelloController {
 	public Contact updateContact(@PathVariable int  id, @RequestBody Contact contact) {
 		return contactService.updateContact(id, contact);
 	}
+	
+	@PatchMapping("/contacts/{id}/favorite")
+	public Contact toggleFavorite(@PathVariable int id) {
+		return contactService.toggleFavorite(id);
+	}
 }

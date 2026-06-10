@@ -68,4 +68,15 @@ public class ContactMemoryRepository implements ContactRepository {
 		}
 		return null;
 	}
+	
+	@Override
+	public Contact toggleFavorite(int id) {
+		for (Contact contact : contacts) {
+			if (contact.getId() == id) {
+				contact.setFavorite(!contact.isFavorite());
+				return contact;
+			}
+		}
+		return null;
+	}
 }
