@@ -1,11 +1,8 @@
 package de.nuri.contactmanagerspring;
 
-import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
 public class ContactMemoryRepository implements ContactRepository {
 	
 	private final List<Contact> contacts = new ArrayList<>();

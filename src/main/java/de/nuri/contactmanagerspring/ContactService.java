@@ -7,10 +7,10 @@ import java.util.List;
 @Service
 public class ContactService {
 	
-	private final ContactRepository repository;
+	private final JpaContactRepository repository;
 	
-	public ContactService(ContactRepository contactRepository) {
-		this.repository = contactRepository;
+	public ContactService(JpaContactRepository repository) {
+		this.repository = repository;
 	}
 	
 	public List<Contact> getContacts() {
@@ -18,40 +18,37 @@ public class ContactService {
 	}
 	
 	public Contact getContactById(int id) {
-		Contact contact = repository.findById(id);
-		if (contact == null) {
-			throw new ContactNotFoundException(id);
-		}
-		return contact;
+		return repository.findById(id)
+		                 .orElseThrow(() -> new ContactNotFoundException(id));
 	}
 	
 	public Contact addContact(Contact contact) {
+		contact.setFavorite(false);
 		return repository.save(contact);
 	}
 	
 	public void deleteContact(int id) {
-		Contact contact = repository.findById(id);
-		if (contact == null) {
-			throw new ContactNotFoundException(id);
-		}
-		repository.deleteById(id);
+		Contact contact = getContactById(id);
+		repository.delete(contact);
 	}
 	
 	public Contact updateContact(int id, Contact contact) {
-		Contact updatedContact = repository.update(id, contact);
-		if (updatedContact == null) {
-			throw new ContactNotFoundException(id);
-		}
-		return updatedContact;
+		Contact existingContact = getContactById(id);
+		
+		existingContact.update(
+				contact.getName(),
+				contact.getEmail(),
+				contact.getPhoneNumber()
+		);
+		
+		return repository.save(existingContact);
 	}
 	
 	public Contact toggleFavorite(int id) {
-		Contact contact = repository.findById(id);
+		Contact contact = getContactById(id);
 		
-		if (contact == null) {
-			throw new ContactNotFoundException(id);
-		}
+		contact.setFavorite(!contact.isFavorite());
 		
-	 return repository.toggleFavorite(id);
+		return repository.save(contact);
 	}
 }
