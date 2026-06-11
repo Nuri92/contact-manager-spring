@@ -1,10 +1,9 @@
 package de.nuri.contactmanagerspring;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "contacts")
@@ -13,8 +12,14 @@ public class Contact {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int     id;
+	@NotBlank(message = "Name darf nicht leer sein")
 	private String  name;
+	
+	@NotBlank(message = "E-Mail darf nicht leer sein")
+	@Email(message = "Ungültige E-Mail-Adresse")
 	private String  email;
+	
+	@Pattern(regexp = "^[0-9]+$", message = "Telefonnummer darf nur Zahlen enthalten")
 	private String  phoneNumber;
 	private boolean favorite;
 	

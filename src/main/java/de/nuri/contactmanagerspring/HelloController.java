@@ -1,5 +1,6 @@
 package de.nuri.contactmanagerspring;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class HelloController {
 	}
 	
 	@PostMapping("/contacts")
-	public Contact addContact(@RequestBody Contact contact) {
+	public Contact addContact(@Valid @RequestBody Contact contact) {
 		return contactService.addContact(contact);
 	}
 	
@@ -38,7 +39,7 @@ public class HelloController {
 	}
 	
 	@PutMapping("/contacts/{id}")
-	public Contact updateContact(@PathVariable int  id, @RequestBody Contact contact) {
+	public Contact updateContact(@PathVariable int id, @Valid @RequestBody Contact contact) {
 		return contactService.updateContact(id, contact);
 	}
 	
