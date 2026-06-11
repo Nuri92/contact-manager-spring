@@ -2,6 +2,7 @@ const apiUrl = "http://localhost:8080/contacts";
 
 const contactsContainer = document.getElementById("contactsContainer");
 const addContactButton = document.getElementById("addContactButton");
+const errorContainer = document.getElementById("errorContainer");
 let editingContactId = null;
 
 addContactButton.addEventListener("click", addContact);
@@ -38,6 +39,8 @@ async function loadContacts() {
 }
 
 async function addContact() {
+    clearErrors();
+
     const nameInput = document.getElementById("nameInput");
     const emailInput = document.getElementById("emailInput");
     const phoneInput = document.getElementById("phoneInput");
@@ -48,8 +51,10 @@ async function addContact() {
         phoneNumber: phoneInput.value
     };
 
+    let response;
+
     if (editingContactId === null) {
-        await fetch(apiUrl, {
+        response = await fetch(apiUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -57,17 +62,23 @@ async function addContact() {
             body: JSON.stringify(contact)
         });
     } else {
-        await fetch(`${apiUrl}/${editingContactId}`, {
+        response = await fetch(`${apiUrl}/${editingContactId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(contact)
         });
-
-        editingContactId = null;
-        addContactButton.textContent = "Kontakt hinzufügen";
     }
+
+    if (!response.ok) {
+        const errorResponse = await response.json();
+        showErrors(errorResponse.errors);
+        return;
+    }
+
+    editingContactId = null;
+    addContactButton.textContent = "Kontakt hinzufügen";
 
     nameInput.value = "";
     emailInput.value = "";
@@ -106,6 +117,20 @@ function startEditContact(id, name, email, phoneNumber) {
     document.getElementById("phoneInput").value = phoneNumber;
 
     addContactButton.textContent = "Kontakt aktualisieren";
+}
+
+function clearErrors() {
+    errorContainer.innerHTML = "";
+}
+
+function showErrors(errors) {
+    errorContainer.innerHTML = "";
+
+    for (const error of errors) {
+        const errorElement = document.createElement("p");
+        errorElement.textContent = error;
+        errorContainer.appendChild(errorElement);
+    }
 }
 
 loadContacts();
